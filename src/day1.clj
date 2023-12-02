@@ -89,7 +89,7 @@
   "Returns the digits or reversed numbers in a string"
   [s]
   (let [number-pattern (string/join "|" (keys reversed-numbers))]
-    (re-seq (re-pattern (format "\\d|%s" number-pattern)) s)))
+    (re-seq (re-pattern (format "\\d|%s" number-pattern)) (string/reverse s))))
 
 (defn calibration-value3
   "Returns the calibration value for a string"
@@ -110,4 +110,4 @@
        (map calibration-value3)
        (reduce +)))
 
-;; Answer 53411
+;; Answer 54087
