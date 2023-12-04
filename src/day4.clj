@@ -2,6 +2,7 @@
   (:require [clojure.edn :as edn]
             [instaparse.core :as insta]
             [medley.core :as m]
+            [clojure.math :as math]
             [clojure.string :as string]
             [clojure.java.io :as io]))
 
@@ -31,18 +32,14 @@
          :card (fn [& kvs]
                  (into {} kvs))})))
 
-(defn score
+(defn count-matching-numbers
   [card]
   (let [{:keys [chosen-numbers winning-numbers]} card]
-    (reduce
-     (fn [score number]
-       (cond
-         (and (zero? score)
-              (contains? chosen-numbers number)) 1
-         (contains? chosen-numbers number) (* 2 score)
-         :else score))
-     0 
-     winning-numbers)))
+    (count (filter chosen-numbers winning-numbers))))
+
+(defn score
+  [card]
+  (int (math/pow 2 (dec (count-matching-numbers card)))))
 
 (def example
   "Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
@@ -65,11 +62,6 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11")
        (reduce +)))
 
 ;; part 2
-
-(defn count-matching-numbers
-  [card]
-  (let [{:keys [chosen-numbers winning-numbers]} card]
-    (count (filter chosen-numbers winning-numbers))))
 
 (defn accumulate-cards
   [cards]
