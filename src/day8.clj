@@ -79,7 +79,7 @@ XXX = (XXX, XXX)")
   (string/includes? node "A"))
 
 (defn follow2
-  "Follow a node until pred, returns the  true"
+  "Follow a node until pred returns true"
   [{:keys [in m]} start pred]
   (reduce (fn [[node i :as step] direction]
             (if (pred node)
